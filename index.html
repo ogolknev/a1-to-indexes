@@ -5,37 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <title>A1 Notation to Indexes</title>
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="description" content="A simple application for converting A1 notation from Excel and Google Sheets to numbers (indexes)">
   </head>
   <body>
-
     <h1>A1 Notation to Indexes</h1>
 
     <main>
-
       <input type="text" id="input" placeholder="A1" oninput="convert()" />
-      
-      <img id="arrow-icon" src="https://api.iconify.design/lucide:arrow-big-right.svg">
-      
+
+      <img
+        id="arrow-icon"
+        src="https://api.iconify.design/lucide:arrow-big-right.svg" />
+
       <div class="output-box">
         <output id="output">column:row</output>
         <button id="copy-button" type="button" onclick="copy()">
           <img
-          id="copy-icon"
-          src="https://api.iconify.design/lucide:clipboard-copy.svg" />
+            id="copy-icon"
+            src="https://api.iconify.design/lucide:clipboard-copy.svg" />
           <img
-          id="success-copy-icon"
-          src="https://api.iconify.design/lucide:check.svg"
-          hidden />
+            id="success-copy-icon"
+            src="https://api.iconify.design/lucide:check.svg"
+            hidden />
           <span>Copy</span>
         </button>
       </div>
 
       <a href="https://github.com/ogolknev/a1-to-indexes">
         <button id="github-button">
-          <img src="https://api.iconify.design/lucide:github.svg">
+          <img src="https://api.iconify.design/lucide:github.svg" />
         </button>
       </a>
-      
     </main>
     <style>
       body {
@@ -208,7 +210,7 @@
           copyIcon.hidden = false;
           successCopyIcon.hidden = true;
 
-          copyButtonText.innerText = "Copy"
+          copyButtonText.innerText = "Copy";
         }, 2000);
       }
     </script>
