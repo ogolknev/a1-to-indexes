@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <title>A1 Notation to Indexes</title>
+  </head>
+  <body>
+
+    <h1>A1 Notation to Indexes</h1>
+
+    <main>
+
+      <input type="text" id="input" placeholder="A1" oninput="convert()" />
+      
+      <img id="arrow-icon" src="https://api.iconify.design/lucide:arrow-big-right.svg">
+      
+      <div class="output-box">
+        <output id="output">column:row</output>
+        <button id="copy-button" type="button" onclick="copy()">
+          <img
+          id="copy-icon"
+          src="https://api.iconify.design/lucide:clipboard-copy.svg" />
+          <img
+          id="success-copy-icon"
+          src="https://api.iconify.design/lucide:check.svg"
+          hidden />
+          <span>Copy</span>
+        </button>
+      </div>
+
+      <a href="https://github.com/ogolknev/a1-to-indexes">
+        <button id="github-button">
+          <img src="https://api.iconify.design/lucide:github.svg">
+        </button>
+      </a>
+      
+    </main>
+    <style>
+      body {
+        margin: 0;
+
+        width: 100dvw;
+        height: 100dvh;
+
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+
+        font-family: monospace;
+        color: #666;
+      }
+
+      main {
+        display: flex;
+        gap: 0.5rem;
+
+        align-items: center;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+        font-weight: lighter;
+      }
+
+      input {
+        font: inherit;
+
+        width: 12rem;
+
+        outline: none;
+        border: none;
+
+        outline: #666 1px solid;
+        padding: 0.5rem;
+
+        border-radius: 5px;
+      }
+
+      input::placeholder {
+        color: #777;
+      }
+
+      input:focus {
+        outline-color: #777;
+        outline-width: 2px;
+      }
+
+      output {
+        color: #777;
+
+        width: 12rem;
+
+        outline: none;
+        border: none;
+
+        outline: #666 1px solid;
+        padding: 0.5rem;
+
+        border-radius: 5px;
+
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+      }
+
+      button {
+        font: inherit;
+
+        outline: none;
+        border: none;
+
+        outline: #666 1px solid;
+        padding: 0.5rem;
+
+        border-radius: 5px;
+
+        display: flex;
+        gap: 0.3rem;
+
+        align-items: center;
+      }
+
+      button > svg {
+        height: 1rem;
+        width: 1rem;
+      }
+
+      .output-box {
+        display: flex;
+
+        gap: 0;
+      }
+
+      #copy-button {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+      }
+
+      #copy-button.copied {
+        outline-color: #777;
+      }
+
+      #arrow-icon {
+        height: 1rem;
+      }
+
+      #github-button {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+      }
+    </style>
+
+    <script>
+      console.log("Script loaded...");
+
+      function convert() {
+        console.log("Submit");
+
+        const input = document.getElementById("input");
+        const output = document.getElementById("output");
+
+        const a1Value = input.value;
+
+        output.innerText = a1ToNumber(a1Value);
+      }
+
+      function a1ToNumber(a1) {
+        if (a1 === "") return "column:row";
+
+        const match = /^([A-Z]+)(\d+)?$/i.exec(a1);
+        if (!match) return "Invalid A1";
+
+        const letters = match[1].toUpperCase();
+        let col = 0;
+        for (let i = 0; i < letters.length; i++) {
+          col = col * 26 + (letters.charCodeAt(i) - 64);
+        }
+
+        if (match[2]) {
+          const row = parseInt(match[2], 10);
+          return `${col}:${row}`;
+        } else {
+          return col;
+        }
+      }
+
+      function copy() {
+        const input = document.getElementById("input");
+        if (input.value === "") return;
+
+        const copyButtonText = document.querySelector("#copy-button > span");
+        navigator.clipboard.writeText(output.innerText);
+
+        copyButtonText.innerText = "Copied";
+
+        const copyIcon = document.getElementById("copy-icon");
+        const successCopyIcon = document.getElementById("success-copy-icon");
+
+        copyIcon.hidden = true;
+        successCopyIcon.hidden = false;
+
+        setTimeout(() => {
+          convert();
+
+          copyIcon.hidden = false;
+          successCopyIcon.hidden = true;
+
+          copyButtonText.innerText = "Copy"
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>
